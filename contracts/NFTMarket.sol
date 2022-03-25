@@ -27,7 +27,7 @@ contract NFTMarket is ReentrancyGuard {
         bool sold;
     }
 
-    mapping(uin256 => MarketItem) private idToMarketItem;
+    mapping(uint256 => MarketItem) private idToMarketItem;
 
     /*
      * Indexed parameters for logged events will allow you to search for these events
@@ -56,8 +56,8 @@ contract NFTMarket is ReentrancyGuard {
         require(price > 0, 'price must be at least 1 wei');
         require(msg.value == listingPrice, 'price must match listing price');
 
-        _itemIds.increment();
-        uint256 itemId = _itemIds.current();
+        _tokenIds.increment();
+        uint256 itemId = _tokenIds.current();
 
         idToMarketItem[itemId] = MarketItem(
             itemId,
@@ -106,8 +106,8 @@ contract NFTMarket is ReentrancyGuard {
     }
 
     function fetchMarketItems() public view returns (MarketItem[] memory) {
-        uint256 itemCount = _itemIds.current();
-        uint256 unsoldItemCount = _itemIds.current() - itemsSold.current();
+        uint256 itemCount = _tokenIds.current();
+        uint256 unsoldItemCount = _tokenIds.current() - _itemsSold.current();
         uint256 currentIdx = 0;
 
         MarketItem[] memory items = new MarketItem[](unsoldItemCount);
@@ -124,7 +124,7 @@ contract NFTMarket is ReentrancyGuard {
     }
 
     function fetchMyNFTs() public view returns (MarketItem[] memory) {
-        uint256 totalItemCount = _itemIds.current();
+        uint256 totalItemCount = _tokenIds.current();
         uint256 itemCount = 0;
         uint256 currentIdx = 0;
 
@@ -147,7 +147,7 @@ contract NFTMarket is ReentrancyGuard {
     }
 
     function fetchItemsCreated() public view returns (MarketItem[] memory) {
-        uint256 totalItemCount = _itemIds.current();
+        uint256 totalItemCount = _tokenIds.current();
         uint256 itemCount = 0;
         uint256 currentIndex = 0;
 

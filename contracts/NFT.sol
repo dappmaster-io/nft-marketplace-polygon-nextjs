@@ -9,19 +9,17 @@ contract NFT is ERC721URIStorage {
     // Counters.counter has a uint256 value that is unwrapped.
     // What happens if I overflow?
     using Counters for Counters.Counter;
-    Counters.Counter private _tokenIds;
+    Counters.Counter private _tokensIds;
     address contractAddress;
 
-    constructor(address marketplaceAddress)
-        ERC7212('Metaverse Tokens', 'METT')
-    {
+    constructor(address marketplaceAddress) ERC721('Metaverse Tokens', 'METT') {
         contractAddress = marketplaceAddress;
     }
 
     function createToken(string memory tokenURI) public returns (uint256) {
-        _tokenIds = _tokenIds.increment();
+        _tokensIds.increment();
         uint256 newItemId = _tokensIds.current();
-        _mint(msg.sender, _tokenIds);
+        _mint(msg.sender, newItemId);
         _setTokenURI(newItemId, tokenURI);
         setApprovalForAll(contractAddress, true);
         return newItemId;
