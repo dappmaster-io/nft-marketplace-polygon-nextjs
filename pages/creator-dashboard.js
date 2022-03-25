@@ -61,7 +61,7 @@ export default function CreatorDashboard() {
               <img src={nft.image} className="rounded" />
               <div className="bg-black p-4">
                 <p className="text-2xl font-bold text-white">
-                  Price - {nft.price} Eth
+                  Price - {nft.price} Matic
                 </p>
               </div>
             </div>
